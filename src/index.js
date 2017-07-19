@@ -33,12 +33,9 @@ class Board extends React.Component {
       </div>
     );
   }
-  
-  
 }
 
 class Game extends React.Component {
-
   constructor() {
     super();
     this.state = {
