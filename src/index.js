@@ -132,8 +132,153 @@ function calculateWinner(squares) {
 }
 
 //=======================================
+const me = {
+  firstName: "Harper",
+  lastName: 'Perez'
+};
+
+//const element = <h1>hello {formatName(me)}</h1>;
+
+function formatName(user) {
+  return user.firstName + '.' + user.lastName;
+}
+
+function Welcome(props) {
+  return <h1>hello {formatName(props.name)}</h1>;
+}
+
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      time: new Date()
+    };
+  }
+
+  render() {
+    return <div>
+        <h1>The time is {this.state.time.toLocaleTimeString()}.</h1>
+        <h1>The date is {this.state.time.toLocaleDateString()}.</h1>
+      </div>;
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount!');
+    this.timerId = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerId);
+  }
+
+  tick() {
+    this.setState({
+      time: new Date()
+    });
+  }
+   
+}
+
+
+  const timeElement = (
+    <div>
+      <Welcome name={
+        {
+          firstName: "Harper",
+          lastName: 'sun'
+        }
+      }/>
+      <Clock />
+    </div>
+  );
+
+//**************************************************************//
+function BoilingVerdict(props) {
+  if (props.celsius >= 100) {
+    return <p>The water would boil.</p>;
+  }
+  return <p>The water would not boil.</p>;
+}
+
+const scaleNames = {
+  c: 'Celsius',
+  f: 'Fahrenheit'
+}
+
+class TemperatureInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      scale: props.scale,
+      temperature: props.value
+    };
+  }
+
+  handleChange(e) {
+    this.props.onChange(e.target.value);
+  }
+
+  render() {
+    const temperature = this.state.temperature;
+    return (
+      <fieldset>
+          <legend>Enter temperature in {scaleNames[this.state.scale]}}</legend>
+          <input
+            value={temperature}
+            onChange={this.handleChange}
+          />
+        </fieldset>
+    );
+  }
+}
+
+class Calculator extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      FahrenheitValue: '',
+      CelsiusValue: ''
+    };
+  }
+
+  handleCelsiusCahnge(value) {
+    let  FahrenheitValue = (parseFloat(value) - 32) * 5 / 9;
+    this.setState ({
+      FahrenheitValue: FahrenheitValue + '',
+      CelsiusValue: value
+    });
+  }
+
+ handleFahrenheitChange(value) {
+    let  CelsiusValue = (parseFloat(value) * 9 / 5) - 32;
+    this.setState({
+      FahrenheitValue: value,
+      CelsiusValue: CelsiusValue + ''
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <TemperatureInput 
+          scale='c' 
+          value={this.state.CelsiusValue}
+          onChange={this.handleCelsiusCahnge} 
+        />
+        <TemperatureInput 
+          scale='f' 
+          value={this.state.FahrenheitValue} 
+          onChange={()=>this.handleFahrenheitChange}
+        />
+      </div>
+    );
+  }
+}
+
 
 ReactDOM.render(
-  <Game />,
-  document.getElementById('root')
+  <Calculator />,
+  document.getElementById('root'),
 );
