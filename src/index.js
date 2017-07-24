@@ -7,7 +7,7 @@ function Square(props) {
   return (
     <button className="square" onClick= {props.onClick} >
         {props.value}
-      </button>
+    </button>
   );
 }
 
@@ -130,6 +130,7 @@ function calculateWinner(squares) {
   }
   return null;
 }
+
 //=======================================
 
 ReactDOM.render(
